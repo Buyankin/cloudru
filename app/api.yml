@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "Simple Flask Application API"
+  description: "API for a simple Flask application showcasing health, hostname, author, and ID endpoints."
+
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /health:
+    get:
+      summary: Check the application's health.
+      responses:
+        200:
+          description: The application is running.
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "I'm alive"
+
+  /hostname:
+    get:
+      summary: Get the hostname of the machine.
+      responses:
+        200:
+          description: The hostname of the machine.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hostname:
+                    type: string
+              example:
+                hostname: "example-hostname"
+
+  /author:
+    get:
+      summary: Get the author from environment variables or return 'unknown'.
+      responses:
+        200:
+          description: The author's name.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                    type: string
+              example:
+                author: "Pavel Buyankin"
+
+  /id:
+    get:
+      summary: Get the UUID from environment variables or return 'unknown'.
+      responses:
+        200:
+          description: The UUID.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+              example:
+                id: "12345678-abcd-efgh-ijkl-123456789012"
+

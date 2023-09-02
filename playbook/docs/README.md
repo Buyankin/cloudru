@@ -54,8 +54,9 @@
 1. Заменить `your_target_host` на имя или IP-адрес целевого хоста, который вы хотите настроить.
 Запуск playbook:
 ```bash
-ansible-playbook -i inventory.ini playbook.yml
+ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass
 ```
+> pass -testpassword
 
 Тегирование задач в Ansible позволяет управлять выполнением отдельных задач при запуске плейбука с использованием флага `--tags` или `--skip-tags`.
 Можно запускать определенные задачи, используя:
@@ -72,8 +73,8 @@ ansible-playbook -i inventory.ini playbook.yml --skip-tags "ssh_config"
 Inventory файл — это файл, в котором указываются хосты и группы хостов, с которыми работает Ansible. 
 Файл `inventory.ini` выглядит так:
 ```ini
-[my_servers]
-your_server_ip_or_hostname ansible_ssh_user=your_ssh_user
+[cloudru_servers]
+your_server_ip_or_hostname ansible_ssh_user=cloudru
 ```
 Здесь:
 - `my_servers` - это групповое имя.

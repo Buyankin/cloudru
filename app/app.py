@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 import os
 import socket
+import uuid
 
 app = Flask(__name__)
 
@@ -9,19 +10,19 @@ app = Flask(__name__)
 def home():
     return jsonify("I'm alive")
 
-@app.route('/hostname')
+@app.route('/hostname', methods=['GET'])
 def get_hostname():
     return jsonify(hostname=socket.gethostname())
 
-@app.route('/author')
+@app.route('/author', methods=['GET'])
 def get_author():
     author = os.environ.get('AUTHOR', 'unknown')
     return jsonify(author=author)
 
-@app.route('/id')
+@app.route('/id', methods=['GET'])
 def get_id():
-    uuid = os.environ.get('UUID', 'unknown')
-    return jsonify(id=uuid)
+    uuid_code = os.environ.get('UUID', str(uuid.uuid4()))
+    return jsonify(id=uuid_code)
 
 if __name__ == '__main__':
     app.run(debug=True)

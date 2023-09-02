@@ -13,4 +13,5 @@ helm install app-release /Users/buyankin/PycharmProjects/cloudru/helm/ap --set s
 helm install app ./app --debug --dry-run   
 cd app
 helm install app .
+helm upgrade app .  
 ```

@@ -1,0 +1,38 @@
+---
+- name: Ensure user cloudru exists
+  user:
+    name: cloudru
+    password: "{{ 'cloudpass' | password_hash('sha512') }}"
+    shell: /bin/bash
+    create_home: yes
+    state: present
+  tags:
+    - user_creation
+
+- name: Allow SSH key authorization
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication yes'
+    state: present
+  tags:
+    - ssh_config
+
+- name: Disallow root login via SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+  notify: restart sshd
+  tags:
+    - ssh_config
+
+- name: Add provided public key for user cloudru
+  authorized_key:
+    user: cloudru
+    state: present
+    key: "{{ ssh_public_key }}"
+  tags:
+    - ssh_key
+...

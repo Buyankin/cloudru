@@ -1,0 +1,7 @@
+---
+- name: Configure server with user and ssh settings
+  hosts: cloudru_servers
+  become: yes
+  roles:
+    - server_config
+...

@@ -21,15 +21,21 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        readinessProbe:
+        readinessProbe: #проверяет, готово ли приложение к обработке трафика.
           httpGet:
             path: /health
             port: 8000
-        livenessProbe:
+          initialDelaySeconds: 10  # начать проверку через 10 секунд после запуска контейнера
+          periodSeconds: 5         # проводить проверку каждые 5 секунд
+          timeoutSeconds: 1        # если проверка занимает более 1 секунды, считать ее неудачной
+          successThreshold: 1      # сколько раз probe должен быть успешным, чтобы считать контейнер готовым
+          failureThreshold: 3      # сколько раз probe может провалиться, прежде чем контейнер будет считаться неготовым
+        livenessProbe: #проверяет, работает ли приложение.
           httpGet:
             path: /health
             port: 8000
-          initialDelaySeconds: 15
-          periodSeconds: 30
-          timeoutSeconds: 1
-          failureThreshold: 6
+          initialDelaySeconds: 15   # начать проверку через 15 секунд после запуска контейнера
+          periodSeconds: 30         # проводить проверку каждые 30 секунд
+          timeoutSeconds: 1         # если проверка занимает более 1 секунды, считать ее неудачной
+          successThreshold: 1       # сколько раз probe должен быть успешным, чтобы считать контейнер работающим
+          failureThreshold: 6       # сколько раз probe может провалиться, прежде чем контейнер будет перезапущен

@@ -1,0 +1,13 @@
+image:
+  name: "pavbuy/cloudru"
+  tag: "latest"
+
+replicaCount: 3
+
+author: "Buyankin"
+
+service:
+  name: "python-app-service-helm"
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
